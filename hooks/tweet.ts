@@ -5,7 +5,7 @@ import { createTweetMutation } from "@/graphql/mutation/tweet";
 import { getAllTweetsQuery } from "@/graphql/query/tweet";
 
 import { useQuery,useMutation, useQueryClient } from "@tanstack/react-query";
-import { create } from "domain";
+// import { create } from "domain";
 import { toast } from "react-hot-toast";
 export const useCreateTweet = () => {
 
@@ -15,7 +15,8 @@ export const useCreateTweet = () => {
             graphqlClient.request(createTweetMutation,{payload}),
             onMutate:  ()=> toast.loading('Creating Tweet...', {id: "1"}),
             onSuccess: async (payload)=>{
-                    await queryClient.invalidateQueries(['all-tweets']),	
+                    // await queryClient.invalidateQueries(['all-tweets']),
+                      await queryClient.invalidateQueries({ queryKey: ["'all-tweets"] });	
                     toast.success('Created success', {id: "1"})
             }             
         });        

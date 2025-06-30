@@ -22,7 +22,7 @@ import { verifyUserGoogleTokenQuery } from "@/graphql/query/user";
 import { useCurrentUser } from "@/hooks/user";
 // import { useGetAllTweets } from "@/hooks/tweet";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCreateTweet } from "@/hooks/tweet";
+// import { useCreateTweet } from "@/hooks/tweet";
 import Image from "next/image";
 import Link from "next/link";
  
@@ -98,7 +98,9 @@ const TwitterLayout: React.FC<TwitterLayoutProps> = (props) => {
       console.log(verifyGoogleToken);
       if (verifyGoogleToken)
         localStorage.setItem("_twitter_token", verifyGoogleToken);
-      await queryClient.invalidateQueries(["current-user"]);
+      // await queryClient.invalidateQueries(["current-user"]);
+      await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+      //  await queryClient.invalidateQueries("current-user");
     },
     [queryClient]
   );
