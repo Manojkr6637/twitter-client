@@ -4,7 +4,7 @@ import {
 } from "react-icons/bi"; 
 import FeedCard from "@/components/feedCard";
  
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useState } from "react"; 
 
 import { useCurrentUser } from "@/hooks/user";
@@ -18,7 +18,7 @@ import { graphqlClient } from "@/clients/api";
 import { getSignedURLForTweetQuery } from "@/graphql/query/tweet";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Ultra } from "next/font/google";
+// import { Ultra } from "next/font/google";
 
 interface HomeProps{
   tweets?: Tweet[]

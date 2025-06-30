@@ -1,16 +1,16 @@
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { BsTwitter } from "react-icons/bs";
 
 import { SlOptions } from "react-icons/sl";
-import FeedCard from "@/components/feedCard";
+// import FeedCard from "@/components/feedCard";
 import {
   BiBookmark,
   BiEnvelope,
   BiHash,
   BiHomeCircle,
-  BiImageAlt,
+  // BiImageAlt,
   BiLogIn,
   BiMoney,
   BiUser,
@@ -20,7 +20,7 @@ import { toast } from "react-hot-toast";
 import { graphqlClient } from "@/clients/api";
 import { verifyUserGoogleTokenQuery } from "@/graphql/query/user";
 import { useCurrentUser } from "@/hooks/user";
-import { useGetAllTweets } from "@/hooks/tweet";
+// import { useGetAllTweets } from "@/hooks/tweet";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCreateTweet } from "@/hooks/tweet";
 import Image from "next/image";
@@ -40,7 +40,7 @@ interface TwitterLayoutProps {
 
 const TwitterLayout: React.FC<TwitterLayoutProps> = (props) => {
   const { user } = useCurrentUser(); 
-  const { mutate } = useCreateTweet();
+  // const { mutate } = useCreateTweet();
  const sidebarMenuItems: TwitterSidebarButton[] = useMemo(()=>
   [
     
@@ -103,13 +103,13 @@ const TwitterLayout: React.FC<TwitterLayoutProps> = (props) => {
     [queryClient]
   );
 
-  const handleSelectImage = useCallback(() => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
+  // const handleSelectImage = useCallback(() => {
+  //   const input = document.createElement("input");
+  //   input.setAttribute("type", "file");
+  //   input.setAttribute("accept", "image/*");
 
-    input.click();
-  }, []);
+  //   input.click();
+  // }, []);
 
   return (
     <div className="bg-black">

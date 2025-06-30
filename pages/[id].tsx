@@ -6,7 +6,7 @@ import { useCurrentUser } from "@/hooks/user";
 import Image from "next/image";
 import FeedCard from "@/components/feedCard";
 import { Tweet, User } from "@/gql/graphql";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { graphqlClient } from "@/clients/api";
 import { getUserByIdQuery } from "@/graphql/query/user";
 import { useMemo } from "react";
@@ -18,7 +18,7 @@ interface ServerProps {
 }
 
 const UserProfilePage: NextPage<ServerProps> = (props) => {
-   const router  = useRouter()
+   // const router  = useRouter()
    const {user: currentUser} = useCurrentUser()
      
    const amIFollowing = useMemo(()=>{
