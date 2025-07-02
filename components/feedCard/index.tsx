@@ -10,7 +10,7 @@ interface FeedCardProps {
 const FeedCard: React.FC<FeedCardProps> = (props) => {
 
   const  {data} = props;
-  console.log("datadata>>-----", data)
+  // console.log("datadata>>-----", data)
   return (
     <div
       className="border border-r-0 border-l-0 p-5 border-gray-600 hover:bg-slate-900

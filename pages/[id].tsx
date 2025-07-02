@@ -9,7 +9,11 @@ import { Tweet, User } from "@/gql/graphql";
 // import { useRouter } from "next/router";
 import { graphqlClient } from "@/clients/api";
 import { getUserByIdQuery } from "@/graphql/query/user";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
+import { followUserMutation, unFollowUserMutation } from "@/graphql/mutation/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { RequestDocument } from "graphql-request";
+
 
 interface ServerProps {
 
@@ -20,6 +24,8 @@ interface ServerProps {
 const UserProfilePage: NextPage<ServerProps> = (props) => {
    // const router  = useRouter()
    const {user: currentUser} = useCurrentUser()
+
+   const queryClient = useQueryClient();
      
    const amIFollowing = useMemo(()=>{
        if(!props?.userInfo) return false;
@@ -30,8 +36,32 @@ const UserProfilePage: NextPage<ServerProps> = (props) => {
 
    },[currentUser?.id, props?.userInfo?.id]);
 
+   console.log("amIFollowingamIFollowing",amIFollowing,currentUser?.id,props?.userInfo?.followers)
+
+
+   const handleFollowUser = useCallback(async ()=>{
+      // console.log('handleFollowUser',props?.userInfo?.id)
+       if (!props?.userInfo?.id) return;
+
+        await graphqlClient.request(followUserMutation, {to: props?.userInfo?.id})
+
+          await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+
+
+   },[props?.userInfo?.id])
+
+
+    const handleUnFollowUser = useCallback(async ()=>{ 
+       if (!props?.userInfo?.id) return; 
+      const dd=   await graphqlClient.request(unFollowUserMutation, {to: props?.userInfo?.id})
+//  console.log('handleUnFollowUser--dd',dd)
+        await queryClient.invalidateQueries({ queryKey: ["current-user"] });
+
+
+   },[props?.userInfo?.id])
+
    
-  console.log("propsprops",props)
+//   console.log("propsprops",props)
   return (
     <TwitterLayout>
       <div>
@@ -57,11 +87,16 @@ const UserProfilePage: NextPage<ServerProps> = (props) => {
                         <span>{props?.userInfo?.followers?.length} Following &nbsp;&nbsp;&nbsp;</span>
                         <span>{props?.userInfo?.following?.length} Follower</span>
                      </div>
+
                      {currentUser?.id ==props?.userInfo?.id && (
                         <>
-                     {amIFollowing?  <button className="font-bold flex rounded-sm">
+                     {amIFollowing?  <button className="bg-white text-black flex rounded-full py-2 px-2 text-sm"
+                        onClick={handleFollowUser}
+                     >
                      Follow
-                  </button>:<button className="font-bold flex rounded-sm">
+                  </button>:<button className="bg-white text-black flex rounded-full py-2 px-2 text-sm"
+                   onClick={handleUnFollowUser}
+                  >
                      UnFollow
                   </button>}
                   </>
